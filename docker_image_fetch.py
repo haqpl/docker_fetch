@@ -3,14 +3,14 @@ import json
 import optparse
 import requests
 
-# pulls Docker Images from authenticated docker registry api. 
-# and checks for docker misconfigurations. 
+# pulls Docker Images from authenticated docker registry api.
+# and checks for docker misconfigurations.
 
 apiversion = "v2"
 final_list_of_blobs = []
 
-	
-# Disable insecure request warning 
+
+# Disable insecure request warning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -19,7 +19,7 @@ parser.add_option('-u', '--url', action="store", dest="url", help="URL Endpoint 
 parser.add_option('-t', '--token', action="store", dest="token", help="Access Token", default="spam")
 options, args = parser.parse_args()
 url = options.url
-token = options.url
+token = options.token
 
 session = requests.Session()
 
@@ -52,7 +52,7 @@ def download_blobs(reponame, blobdigest,dirname):
 	with open(dirname + "/" + filename, 'wb') as test:
 		test.write(req.content)
 
-def main(): 
+def main():
 	if url is not "spam":
 		list_of_repos = list_repos()
 		print "\n[+] List of Repositories:\n"
@@ -83,7 +83,7 @@ def main():
 		else:
 			print "No such repo found. Quitting...."
 	else:
-		print "\n[-] Please use -u option to define API Endpoint, e.g. https://IP:Port\n"
+		print "\n[-] Please use -u option to define API Endpoint, e.g. https://IP:Port, and -t to define access token\n"
 
 
 if __name__ == "__main__":
